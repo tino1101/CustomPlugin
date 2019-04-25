@@ -5,6 +5,7 @@ apply plugin: 'groovy'
 apply plugin: 'java'
 
 apply plugin: CustomPlugin
+apply plugin: CustomPlugin2
 
 
 repositories {
@@ -26,3 +27,19 @@ class CustomPlugin implements Plugin<Project> {
         }
     }
 }
+
+class CustomPluginExtension {
+    String message = 'CustomPluginExtensionMessage'
+}
+class CustomPlugin2 implements Plugin<Project> {
+    @Override
+    void apply(Project project) {
+        def extension = project.extensions.create('custom', CustomPluginExtension)
+        project.task('CustomPluginTask2') {
+            doLast {
+                println extension.message
+            }
+        }
+    }
+}
+custom.message = "CustomPluginTask2"
