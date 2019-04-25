@@ -1,49 +1,71 @@
-import org.gradle.api.Plugin;
-import org.gradle.api.Project;
+//import org.gradle.api.Plugin;
+//import org.gradle.api.Project;
+//
+//group 'com.example.plugins'
+//version '1.0-SNAPSHOT'
+//
+//apply plugin: 'groovy'
+//apply plugin: 'java'
+//
+//apply plugin: CustomPlugin
+//apply plugin: CustomPlugin2
+//apply plugin: CustomPlugin3
+//
+//
+//repositories {
+//    mavenCentral()
+//}
+//
+//dependencies {
+//    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+//    testCompile group: 'junit', name: 'junit', version: '4.11'
+//}
+//
+//class CustomPlugin implements Plugin<Project> {
+//    @Override
+//    void apply(Project project) {
+//        project.task('CustomPluginTask1') {
+//            doLast {
+//                println "CustomPluginTask1"
+//            }
+//        }
+//    }
+//}
+//
+//class CustomPluginExtension {
+//    String message = 'CustomPluginExtensionMessage'
+//}
+//class CustomPlugin2 implements Plugin<Project> {
+//    @Override
+//    void apply(Project project) {
+//        def extension = project.extensions.create('custom', CustomPluginExtension)
+//        project.task('CustomPluginTask2') {
+//            doLast {
+//                println extension.message
+//            }
+//        }
+//    }
+//}
+//custom.message = "CustomPluginTask2"
+
+
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
 
 group 'com.example.plugins'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'groovy'
-apply plugin: 'java'
-
-apply plugin: CustomPlugin
-apply plugin: CustomPlugin2
-apply plugin: CustomPlugin3
-
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.3.11'
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-}
-
-class CustomPlugin implements Plugin<Project> {
-    @Override
-    void apply(Project project) {
-        project.task('CustomPluginTask1') {
-            doLast {
-                println "CustomPluginTask1"
-            }
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
         }
     }
 }
-
-class CustomPluginExtension {
-    String message = 'CustomPluginExtensionMessage'
-}
-class CustomPlugin2 implements Plugin<Project> {
-    @Override
-    void apply(Project project) {
-        def extension = project.extensions.create('custom', CustomPluginExtension)
-        project.task('CustomPluginTask2') {
-            doLast {
-                println extension.message
-            }
-        }
-    }
-}
-custom.message = "CustomPluginTask2"
